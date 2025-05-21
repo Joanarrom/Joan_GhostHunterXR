@@ -1,24 +1,62 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic; 
+
 
 public class GhostMove : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public float speed = 1;
+ public NavMeshAgent agent;
+    public float speed = 1f;
     public Animator animator;
-    
+
+    public GameObject GetClosestOrb()
+    {
+        GameObject closestOrb = null;
+        float minDistance = Mathf.Infinity;
+
+        List<GameObject> orbs = OrbSpawner.Instance.spawnedOrbs;
+
+        foreach (var item in orbs)
+        {
+            float d = Vector3.Distance(item.transform.position, transform.position);
+
+            if (d < minDistance)
+            {
+                minDistance = d;
+                closestOrb = item;
+            }
+        }
+
+        return closestOrb; 
+    }
+
     void Update()
     {
-        Vector3 destination = Camera.main.transform.position;
-        agent.SetDestination(destination);
-        agent.speed = speed;
+        if (!agent.enabled)
+            return;
+
+        GameObject closest = GetClosestOrb();
+
+        if (closest != null) 
+        {
+            Vector3 targetPosition = closest.transform.position;
+            agent.SetDestination(targetPosition); 
+            agent.speed = speed;
+
+           
+            if (Vector3.Distance(transform.position, closest.transform.position) < 1.0f) 
+            {
+                
+                OrbSpawner.Instance.DestroyOrb(closest);
+            }
+        }
     }
 
     public void Kill()
     {
         agent.enabled = false;
-        animator.SetTrigger("Death");
+        animator.SetTrigger("Die");
     }
 
     public void Destroy()
