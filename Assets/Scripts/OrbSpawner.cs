@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;  // Importante para recargar escena
+using System.Collections;
 using System.Collections.Generic;
 using Meta.XR.MRUtilityKit;
 
@@ -20,6 +22,11 @@ public class OrbSpawner : MonoBehaviour
 
     [Header("Game Over UI")]
     public GameObject gameOverCanvas;  
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -99,12 +106,14 @@ public class OrbSpawner : MonoBehaviour
         if (spawnedOrbs.Count == 0)
         {
             Debug.Log("Game Over! All orbs have been destroyed.");
-            gameOverCanvas.SetActive(true);  
+            gameOverCanvas.SetActive(true);
+            StartCoroutine(RestartGameAfterDelay(3f));  // Arranca la corutina para reiniciar el juego
         }
     }
 
-    void Awake()
+    IEnumerator RestartGameAfterDelay(float delay)
     {
-        Instance = this;
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Recarga la escena actual
     }
 }

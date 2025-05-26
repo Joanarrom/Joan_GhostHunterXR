@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class GhostSpawner : MonoBehaviour
 {
+    public static GhostSpawner Instance;
+
     public float spawnInterval = 1f;
     public GameObject ghostPrefab;
     public int ghostCount = 20;
-    
+
     public float minEdgeDistance = 0.3f;
     public MRUKAnchor.SceneLabels spawnLabels;
     public float normalOffset = -1.5f;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public GameObject winCanvas;  
+
+    void Awake()
+    {
+        Instance = this;
+        if (winCanvas != null)
+            winCanvas.SetActive(false); 
+    }
+
     void Start()
     {
         StartCoroutine(SpawnGhostsCoroutine());
@@ -24,7 +34,7 @@ public class GhostSpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnInterval);
             SpawnGhost();
-            ghostCount--;                        
+            ghostCount--;
         }
     }
 
@@ -50,5 +60,18 @@ public class GhostSpawner : MonoBehaviour
             }
         }
     }
+
     
+    public void CheckForWin()
+    {
+        GhostMove[] ghosts = FindObjectsOfType<GhostMove>();
+        Debug.Log($"Fantasmas: {ghosts.Length}, ghostCount: {ghostCount}");
+        
+        // Fuerza ghostCount para test:
+        if (ghosts.Length == 0 && ghostCount <= 0)
+        {
+            winCanvas.SetActive(true);
+            Debug.Log("¡WIN ACTIVADO!");
+        }
+    }
 }
