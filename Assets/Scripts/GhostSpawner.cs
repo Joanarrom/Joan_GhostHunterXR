@@ -62,7 +62,7 @@ public class GhostSpawner : MonoBehaviour
     }
 
     
-    public void CheckForWin()
+    /*public void CheckForWin()
     {
         GhostMove[] ghosts = FindObjectsOfType<GhostMove>();
         Debug.Log($"Fantasmas: {ghosts.Length}, ghostCount: {ghostCount}");
@@ -73,5 +73,5 @@ public class GhostSpawner : MonoBehaviour
             winCanvas.SetActive(true);
             Debug.Log("¡WIN ACTIVADO!");
         }
-    }
+    }*/
 }

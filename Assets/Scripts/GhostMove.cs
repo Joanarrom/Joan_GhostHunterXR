@@ -1,4 +1,4 @@
-using System.Collections;  // para IEnumerator
+using System.Collections;  
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
@@ -54,17 +54,18 @@ public class GhostMove : MonoBehaviour
     {
         agent.enabled = false;
         animator.SetTrigger("Die");
-        // Cambié la llamada para que use el método que sí está definido:
-        StartCoroutine(DelayedCheckWin(0.5f));
+        Destroy(gameObject); 
+       
+      //  StartCoroutine(DelayedCheckWin(0.5f));
     }
 
-    private IEnumerator DelayedCheckWin(float delay)
+  /*  private IEnumerator DelayedCheckWin(float delay)
     {
         yield return new WaitForSeconds(delay);
         GhostSpawner.Instance.CheckForWin();
-        Destroy(gameObject);  // destruye aquí el fantasma luego de la espera
+        Destroy(gameObject);  
     }
-
+*/
     public void DestroyGhost()
     {
         Destroy(gameObject);

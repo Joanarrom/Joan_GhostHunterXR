@@ -107,13 +107,13 @@ public class OrbSpawner : MonoBehaviour
         {
             Debug.Log("Game Over! All orbs have been destroyed.");
             gameOverCanvas.SetActive(true);
-            StartCoroutine(RestartGameAfterDelay(3f));  // Arranca la corutina para reiniciar el juego
+            StartCoroutine(RestartGameAfterDelay(3f)); 
         }
     }
 
     IEnumerator RestartGameAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Recarga la escena actual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
 }
