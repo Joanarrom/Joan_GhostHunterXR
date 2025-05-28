@@ -43,7 +43,7 @@ public class GhostMove : MonoBehaviour
             agent.SetDestination(targetPosition); 
             agent.speed = speed;
 
-            if (Vector3.Distance(transform.position, closest.transform.position) < 1.0f) 
+            if (Vector3.Distance(transform.position, closest.transform.position) < 0.2f) 
             {
                 OrbSpawner.Instance.DestroyOrb(closest);
             }
